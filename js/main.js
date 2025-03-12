@@ -13,7 +13,13 @@ window.onload = () => {
     alert(`Test`);
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const slidePicture = document.querySelector(".carousel-slides");
-    const navArrows = document.querySelectorAll(".carousel-navigation a");
-    let currentIndex = 0;
+const fetchData = async () => {
+    try {
+        const response = await fetch(`json/data.json`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching JSON data:`, error);
+        return null;
+    }
+};
