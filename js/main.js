@@ -12,3 +12,8 @@
 window.onload = () => {
     alert(`Test`);
 };
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const slidePicture = document.querySelector(".carousel-slides");
+    const navArrows = document.querySelectorAll(".carousel-navigation a");
+    let currentIndex = 0;
