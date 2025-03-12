@@ -60,7 +60,7 @@ let validateHTML = () => {
 };
 
 let compileCSSForDev = () => {
-    return src(`styles/css`)
+    return src(`styles/**/*.css`)
         .pipe(sass.sync({
             outputStyle: `expanded`,
             precision: 10
@@ -87,7 +87,7 @@ let compressHTML = () => {
 };
 
 let compileCSSForProd = () => {
-    return src(`styles/css`, { allowEmpty: true })
+    return src(`styles/**/*.css`, { allowEmpty: true })
         .pipe(sass.sync({
             outputStyle: `compressed`,
             precision: 10
