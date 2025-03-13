@@ -14,11 +14,12 @@ body {
   font-weight: 300;
   font-size: 16px;
   line-height: 1.4;
-  text-align: center;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
+/* rules: 2rem, 1.1875 leading, 600 weight */
 header h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
@@ -29,7 +30,97 @@ header h1 {
 
 .carousel {
   position: relative;
-  max-width: 680px;
-  margin: auto;
+  width: 640px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Slide Container */
+.carousel-slides {
+  display: flex;
+  transition: transform .3s ease-in-out;
+  flex-wrap: nowrap;
+}
+
+.slide {
+  box-sizing: border-box;
+  width: 640px;
   padding: 0 20px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+/* Navigation Arrows */
+.carousel-navigation {
+  position: absolute;
+  top: 30%;
+  width: 600px;
+  left: 3%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Clickable Arrows */
+.carousel-navigation a {
+  pointer-events: auto;
+  border-radius: 50%;
+  padding: .5rem;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+
+.carousel-navigation img {
+  width: 30px;
+  height: auto;
+}
+
+/* Album Title */
+.album-title {
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Band Name */
+.artist {
+  font-weight: 300;
+  margin-top: -.3rem;
+  text-align: center;
+}
+
+/* Link */
+.artist a:hover {
+  text-decoration: underline;
+}
+
+/* Cover Image */
+.slide img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: .1rem;
+}
+
+/* Credit paragraph */
+.credit {
+  font-size: .75rem;
+  text-align: center;
+}
+
+.review-text {
+  margin-top: -.5rem;
+  font-weight: 300;
+  font-size: .9rem;
+}
+
+.review-source {
+  margin-bottom: .75rem;
+}
+
+/* Make Spacing Neater*/
+.slide p {
+  margin-bottom: 1rem;
 }
