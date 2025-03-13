@@ -120,11 +120,12 @@ let compressImages = () => {
 
 let copyUnprocessedAssetsForProd = () => {
     return src([
-        `*.*`,       // Source all files,
-        `img/**/*`,     // ignore images;
-        `js/**/*`,  // ignore JS;
-        `styles/**/*` // and, ignore Sass/CSS.
-    ], {dot: true})
+        `*.*`,         // Source all files
+        `img/**/*`,
+        `js/**/*`,
+        `styles/**/*`,
+        `json/**/*`
+    ], { dot: true })
         .pipe(dest(`prod`));
 };
 
