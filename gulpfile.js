@@ -13,47 +13,6 @@ const { src, dest, series, watch } = require(`gulp`),
 
 let browserChoice = `default`;
 
-async function brave () {
-    browserChoice = `brave browser`;
-}
-
-async function chrome () {
-    browserChoice = `google chrome`;
-}
-
-async function edge () {
-    // In Windows, the value might need to be “microsoft-edge”. Note the dash.
-    browserChoice = `microsoft edge`;
-}
-
-async function firefox () {
-    browserChoice = `firefox`;
-}
-
-async function opera () {
-    browserChoice = `opera`;
-}
-
-async function safari () {
-    browserChoice = `safari`;
-}
-
-async function vivaldi () {
-    browserChoice = `vivaldi`;
-}
-
-async function allBrowsers () {
-    browserChoice = [
-        `brave browser`,
-        `google chrome`,
-        `microsoft edge`, // Note: In Windows, this might need to be microsoft-edge
-        `firefox`,
-        `opera`,
-        `safari`,
-        `vivaldi`
-    ];
-}
-
 let validateHTML = () => {
     return src([`*.html`])
         .pipe(htmlValidator(undefined));
@@ -95,6 +54,12 @@ let compileCSSForProd = () => {
         .pipe(dest(`prod/styles`));
 };
 
+let compileJSONForProd = () => {
+    return src(`json/**/*`)
+        .pipe(babel())
+        .pipe(dest(`prod/json`));
+};
+
 let transpileJSForProd = () => {
     return src(`js/*.js`)
         .pipe(babel())
@@ -124,7 +89,7 @@ let copyUnprocessedAssetsForProd = () => {
         `img/**/*`,
         `js/**/*`,
         `styles/**/*`,
-        `json/**/*`
+        `"json/data.json"`
     ], { dot: true })
         .pipe(dest(`prod`));
 };
@@ -152,6 +117,9 @@ let serve = () => {
         .on(`change`, reload);
 
     watch(`/img/**/*`)
+        .on(`change`, reload);
+
+    watch(`json/**/*`)
         .on(`change`, reload);
 };
 
@@ -205,14 +173,6 @@ let lintCSS = () => {
         }));
 };
 
-exports.brave = series(brave, serve);
-exports.chrome = series(chrome, serve);
-exports.edge = series(edge, serve);
-exports.firefox = series(firefox, serve);
-exports.opera = series(opera, serve);
-exports.safari = series(safari, serve);
-exports.vivaldi = series(vivaldi, serve);
-exports.allBrowsers = series(allBrowsers, serve);
 exports.validateHTML = validateHTML;
 exports.compileCSSForDev = compileCSSForDev;
 exports.lintJS = lintJS;
@@ -237,5 +197,6 @@ exports.build = series(
     compileCSSForProd,
     transpileJSForProd,
     compressImages,
+    compileJSONForProd,
     copyUnprocessedAssetsForProd
 );
