@@ -61,10 +61,10 @@ let compileJSONForProd = () => {
 };
 
 let transpileJSForProd = () => {
-    return src(`js/*.js`)
+    return src(`js/**/*`)
         .pipe(babel())
         .pipe(jsCompressor())
-        .pipe(dest(`prod/scripts`));
+        .pipe(dest(`prod/js`));
 };
 
 let compressImages = () => {
@@ -85,11 +85,11 @@ let compressImages = () => {
 
 let copyUnprocessedAssetsForProd = () => {
     return src([
-        `*.*`,         // Source all files
-        `img/**/*`,
-        `js/**/*`,
+        `*!.*`,         // Source all files
+        `!img/**/*`,
+        `!js/**/*`,
         `styles/**/*`,
-        `"json/data.json"`
+        `json/**/*`
     ], { dot: true })
         .pipe(dest(`prod`));
 };
@@ -107,7 +107,7 @@ let serve = () => {
         }
     });
 
-    watch(`js/*.js`, series(lintJS, transpileJSForDev))
+    watch(`js/**/*`, series(lintJS, transpileJSForDev))
         .on(`change`, reload);
 
     watch(`styles/**/*.css`, compileCSSForDev)
