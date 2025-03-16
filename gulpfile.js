@@ -85,7 +85,7 @@ let compressImages = () => {
 
 let copyUnprocessedAssetsForProd = () => {
     return src([
-        `*!.*`,         // DONT include source of all files
+        `*.*`,         // DONT include source of all files
         `!img/**/*`,
         `!js/**/*`,
         `styles/**/*`,
@@ -116,7 +116,7 @@ let serve = () => {
     watch(`*.html`, validateHTML)
         .on(`change`, reload);
 
-    watch(`/img/**/*`)
+    watch(`img/**/*`)
         .on(`change`, reload);
 
     watch(`json/**/*`)
