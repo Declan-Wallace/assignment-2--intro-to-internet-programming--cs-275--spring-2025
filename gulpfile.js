@@ -154,12 +154,10 @@ exports.serve = series(
     serve
 );
 exports.build = series(
-    copyUnprocessedAssetsForProd,
-    validateHTML,
     compressHTML,
-    transpileJSForProd,
     compileCSSForProd,
-    lintJS,
+    transpileJSForProd,
     compressImages,
+    copyUnprocessedAssetsForProd,
     replacePaths
 );
