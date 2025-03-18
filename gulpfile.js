@@ -1,6 +1,5 @@
 const { src, dest, series, watch } = require(`gulp`),
     CSSLinter = require(`gulp-stylelint`),
-    del = require(`del`),
     babel = require(`gulp-babel`),
     htmlCompressor = require(`gulp-htmlmin`),
     htmlValidator = require(`gulp-html`),
@@ -117,26 +116,6 @@ let serve = () => {
         .on(`change`, reload);
 };
 
-async function clean() {
-    let fs = require(`fs`),
-        i,
-        foldersToDelete = [`./temp`, `prod`];
-
-    for (i = 0; i < foldersToDelete.length; i++) {
-        try {
-            fs.accessSync(foldersToDelete[i], fs.F_OK);
-            process.stdout.write(`\n\tThe ` + foldersToDelete[i] +
-                ` directory was found and will be deleted.\n`);
-            del(foldersToDelete[i]);
-        } catch (e) {
-            process.stdout.write(`\n\tThe ` + foldersToDelete[i] +
-                ` directory does NOT exist or is NOT accessible.\n`);
-        }
-    }
-
-    process.stdout.write(`\n`);
-}
-
 async function listTasks () {
     let exec = require(`child_process`).exec;
 
@@ -176,7 +155,6 @@ exports.compileCSSForProd = compileCSSForProd;
 exports.transpileJSForProd = transpileJSForProd;
 exports.compressImages = compressImages;
 exports.copyUnprocessedAssetsForProd = copyUnprocessedAssetsForProd;
-exports.clean = clean;
 exports.default = listTasks;
 exports.lintCSS = lintCSS;
 exports.serve = series(
