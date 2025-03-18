@@ -8,6 +8,7 @@ const { src, dest, series, watch } = require(`gulp`),
     jsLinter = require(`gulp-eslint`),
     sass = require(`gulp-sass`)(require(`sass`)),
     browserSync = require(`browser-sync`),
+    replace = require(`gulp-replace`),
     reload = browserSync.reload;
 
 let browserChoice = `default`;
@@ -74,6 +75,7 @@ let compressImages = () => {
             quiet: false
         }))
         .pipe(dest(`prod/img`));
+
 };
 
 let copyUnprocessedAssetsForProd = () => {
@@ -85,6 +87,12 @@ let copyUnprocessedAssetsForProd = () => {
         `json/**/*`
     ], { dot: true })
         .pipe(dest(`prod`));
+};
+
+let replacePaths = () => {
+    return src(`prod/json/*`)
+        .pipe(replace(/"img\//g, `"prod/img/`))
+        .pipe(dest(`prod/json`));
 };
 
 let serve = () => {
@@ -129,13 +137,15 @@ let lintCSS = () => {
 exports.validateHTML = validateHTML;
 exports.compileCSSForDev = compileCSSForDev;
 exports.lintJS = lintJS;
+exports.copyUnprocessedAssetsForProd = copyUnprocessedAssetsForProd;
 exports.transpileJSForDev = transpileJSForDev;
 exports.compressHTML = compressHTML;
 exports.compileCSSForProd = compileCSSForProd;
 exports.transpileJSForProd = transpileJSForProd;
 exports.compressImages = compressImages;
-exports.copyUnprocessedAssetsForProd = copyUnprocessedAssetsForProd;
 exports.lintCSS = lintCSS;
+exports.replacePaths = replacePaths;
+
 exports.serve = series(
     validateHTML,
     compileCSSForDev,
@@ -144,9 +154,12 @@ exports.serve = series(
     serve
 );
 exports.build = series(
+    copyUnprocessedAssetsForProd,
+    validateHTML,
     compressHTML,
-    compileCSSForProd,
     transpileJSForProd,
+    compileCSSForProd,
+    lintJS,
     compressImages,
-    copyUnprocessedAssetsForProd
+    replacePaths
 );
