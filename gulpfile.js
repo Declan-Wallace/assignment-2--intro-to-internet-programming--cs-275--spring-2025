@@ -54,12 +54,6 @@ let compileCSSForProd = () => {
         .pipe(dest(`prod/styles`));
 };
 
-let compileJSONForProd = () => {
-    return src(`json/*.json/*`)
-        .pipe(babel())
-        .pipe(dest(`prod/json`));
-};
-
 let transpileJSForProd = () => {
     return src(`js/**/*`)
         .pipe(babel())
@@ -197,6 +191,5 @@ exports.build = series(
     compileCSSForProd,
     transpileJSForProd,
     compressImages,
-    compileJSONForProd,
     copyUnprocessedAssetsForProd
 );
