@@ -55,7 +55,7 @@ let compileCSSForProd = () => {
 };
 
 let compileJSONForProd = () => {
-    return src(`json/**/*`)
+    return src(`json/*.json/*`)
         .pipe(babel())
         .pipe(dest(`prod/json`));
 };
