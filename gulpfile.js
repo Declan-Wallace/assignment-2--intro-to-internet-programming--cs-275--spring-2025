@@ -116,26 +116,6 @@ let serve = () => {
         .on(`change`, reload);
 };
 
-async function listTasks () {
-    let exec = require(`child_process`).exec;
-
-    exec(`gulp --tasks`, function (error, stdout, stderr) {
-        if (null !== error) {
-            process.stdout.write(`An error was likely generated when invoking ` +
-                `the “exec” program in the default task.`);
-        }
-
-        if (`` !== stderr) {
-            process.stdout.write(`Content has been written to the stderr stream ` +
-                `when invoking the “exec” program in the default task.`);
-        }
-
-        process.stdout.write(`\n\tThis default task does ` +
-            `nothing but generate this message. The ` +
-            `available tasks are:\n\n${stdout}`);
-    });
-}
-
 let lintCSS = () => {
     return src(`styles/css/**/*.css`)
         .pipe(CSSLinter({
@@ -155,7 +135,6 @@ exports.compileCSSForProd = compileCSSForProd;
 exports.transpileJSForProd = transpileJSForProd;
 exports.compressImages = compressImages;
 exports.copyUnprocessedAssetsForProd = copyUnprocessedAssetsForProd;
-exports.default = listTasks;
 exports.lintCSS = lintCSS;
 exports.serve = series(
     validateHTML,
